@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Users</title>
+</head>
+<body>
+    <nav id="nav">
+        <div>
+            <a href="/dashboard"><img id="logo" src="assets/logo-lmc-white.png" alt=""></a>
+        </div>
+        <div id="nav-right">
+            <div><img src="assets/repeat.svg" alt=""></div>
+            <div><p>Switch To Trainee</p></div>
+            <div><img src="assets/bell.svg" alt=""></div>
+            <div><a href="/users/logout"><img src="assets/box-arrow-right.svg" alt=""></a></div>
+        </div>
+    </nav>
+ 
+    <div class="sidebar">
+        <div class="sidebar-btn">
+            <span class="line1"></span>
+            <span class="line2"></span>
+        </div>
+        <div id="sidebar-logo">
+            <img id="logo" src="assets/logo-lmc-white.png" alt="">
+        </div>
+
+        <div id="account-container">
+            <div>
+                <img id="user-default-logo" src="assets/user-default.svg" alt="">
+            </div>
+            <div>
+                <h3><%= name%></h3>
+                <p><%= role%></p>
+            </div>
+        </div>
+        <div class="nav-tool">
+            <a class="link" href="">
+              <img src="assets/computer-solid.svg" alt="">
+              <p>Dashboard</p>
+            </a>
+            <a class="link" href="">
+              <img src="assets/arrow-up-right-dots-solid.svg" alt="">
+              <p>Career Path</p>
+            </a>
+            <a class="link" href="">
+              <img src="assets/graph-up-arrow.svg" alt="">
+              <p>Learning Course</p>
+            </a>
+            <a class="link" href="">
+              <img src="assets/journal-check.svg" alt="">
+              <p>Assessment</p>
+            </a>
+            <a class="link" href="">
+              <img src="assets/journals.svg" alt="">
+              <p>Module Library</p>
+            </a>
+            <a class="link" href="">
+              <img src="assets/users-solid.svg" alt="">
+              <p>Team</p>
+            </a>
+            <a class="link" href="">
+              <img src="assets/person.svg" alt="">
+              <p>User</p>
+            </a>    
+            <a class="link" href="">
+              <img src="assets/reception-4.svg" alt="">
+              <p>Reports</p>
+            </a>
+            <a class="link" href="">
+              <img src="assets/person-circle.svg" alt="">
+              <p>Profile</p>
+            </a>
+            <a class="link" href="">
+              <img src="assets/circle-info-solid.svg" alt="">
+              <p>Help and Feedback</p>
+            </a>
+            <a class="link" href="">
+              <img src="assets/megaphone.svg" alt="">
+              <p>What's New</p>
+            </a>
+          </div>
+    </div>
+    <div id="container">
+       
+        <div id="container-header">
+            <div><h2>Users</h2></div>
+            <div id="add-user-btn">
+                <img src="assets/plus-solid.svg" alt="">
+                <p>Invite User</p>
+            </div>
+        </div>
+        <div id="container-search">
+            <div>
+                <select name="" id="">
+                    <option value="" selected disabled>Name</option>
+                </select>
+            </div>
+
+            <div>
+                <form action="">
+                    <input type="text" placeholder="Search...">
+                </form>
+            </div>
+        </div>
+        <% if(error_msg != ''){ %>
+            <p class="error_msg"><%= error_msg %></p>
+        <% } %> 
+        <% if(success_msg != ''){ %>
+            <p class="success-msg"><%= success_msg %></p>
+        <%}%> 
+       
+        <div id="container-table">
+            <table cellspacing="0" id="table">
+                <thead id="thead">
+                    <tr>
+                        <td>Email</td>
+                        <td>Name</td>
+                        <td>Status</td>
+                        <td>Role</td>
+                        <td>View</td>
+                        <td>Update</td>
+                        <td>Delete</td>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    <% if (users.length <= 0) { %>
+                        <p> No Data Available</p>
+                        <%} else { %>
+                            <% users.forEach(user =>{%>
+                                <tr>
+                                    <td hidden><%=user._id%></td>
+                                    <td id="user-td"><img id="user-default-logo" src="assets/user-default.svg" alt=""><div><%=user.email%></div></td>
+                                    <td><%=user.name%></td>
+                                    <td><%=user.status%></td>
+                                    <td><%=user.role%></td>
+                                    <td><img id="view" src="assets/view.svg" alt="view"></td>
+                                    <td><img class="editbtn" src="assets/edit.svg" alt="edit"></td>
+                                    <td><img class="deletebtn" src="assets/trash.svg" alt="delete"></td>
+                                </tr>
+                            <%})%>
+                        <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Register new User -->
+    <div class="register-modal">
+        <div class="register-modal-body ">
+            <div class="register-modal-close-btn"><img src="assets/x-lg.svg" alt=""></div>
+            <h1>Register New User</h1>
+            <div class="form-body">
+                <form action="/users/register" method="POST">
+                    <input type="text" name="name" placeholder="Name" >
+                    <input type="text" name="email" placeholder="Email" >
+                    <input type="text" name="status" value="active" hidden>
+                    <select name="role">
+                        <option value="" selected disabled>Select Option</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Trainer">Trainer</option>
+                        <option value="Trainee">Trainee</option>
+                    </select>
+                    <input type="password" name="password" placeholder="Password" >
+                    <input type="password" name="password2" placeholder="Confirm Password" >
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Update User -->
+    <div class="update-modal">
+        <div class="update-modal-body">
+        <div class="update-modal-close-btn"><img src="assets/x-lg.svg" alt=""></div>
+        <h1>Update User</h1>
+        <div class="form-body">
+            <form action="/users/update" method="POST">
+                <input id="update-id" type="text" name="id" hidden>
+                <input id="update-name" type="text" name="name">
+                <input id="update-email" type="text" name="email">
+                <select name="status">
+                    <option value="" selected disabled>Select Status</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+                <select name="role">
+                    <option value="" selected disabled>Select Role</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Trainer">Trainer</option>
+                    <option value="Trainee">Trainee</option>
+                </select>
+                <input type="submit" value="Confirm">
+            </form>
+        </div>
+        </div>
+    </div>
+    <!-- Delete User -->
+    <div class="delete-modal">
+        <div class="delete-modal-body">
+            <p>Are you sure to delete this user?</p>
+            <p id="delete-user-email"></p>
+            <form action="/users/destroy" method="POST">
+                <input id="delid" type="text" name="id" hidden>
+                <p class="delete-modal-close-btn">Cancel</p>
+                <input type="submit" value="Delete">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    const tbody = document.querySelector('#tbody');
+    const editbtn = document.querySelectorAll('.editbtn');
+    const delbtn = document.querySelectorAll('.deletebtn');
+    for(let i = 0 ; i<tbody.rows.length; i++){
+        editbtn[i].addEventListener('click',()=>{
+            const parent = editbtn[i].parentElement.parentElement;
+            document.querySelector('.update-modal').classList.add('active');
+            document.querySelector('#update-id').value = parent.children.item(0).innerHTML;
+            document.querySelector('#update-email').value = parent.children.item(1).children.item(1).innerHTML;
+            document.querySelector('#update-name').value = parent.children.item(2).innerHTML;
+            document.querySelector('#update-status').value = parent.children.item(3).innerHTML;
+            document.querySelector('#update-role').value = parent.children.item(4).innerHTML;
+
+        })
+        delbtn[i].addEventListener('click',()=>{
+            const parent = editbtn[i].parentElement.parentElement;
+            document.querySelector('.delete-modal').classList.add('active');
+            document.querySelector('#delid').value = parent.children.item(0).innerHTML;
+            document.querySelector('#delete-user-email').innerHTML = parent.children.item(1).children.item(1).innerHTML;
+
+        })  
+    }
+
+    document.querySelector('.sidebar-btn').addEventListener('click',()=>{
+        document.querySelector('.sidebar-btn').classList.toggle('active');
+        document.querySelector('.line1').classList.toggle('active');
+        document.querySelector('.line2').classList.toggle('active');
+        document.querySelector('.sidebar').classList.toggle('active');
+    })
+    document.querySelector('#add-user-btn').addEventListener('click',()=>{
+        document.querySelector('.register-modal').classList.add('active');
+    })
+
+    document.querySelector('.register-modal-close-btn').addEventListener('click',()=>{
+        document.querySelector('.register-modal').classList.remove('active');
+    })
+    document.querySelector('.update-modal-close-btn').addEventListener('click',()=>{
+        document.querySelector('.update-modal').classList.remove('active');
+    })
+    document.querySelector('.delete-modal-close-btn').addEventListener('click',()=>{
+        document.querySelector('.delete-modal').classList.remove('active');
+    })
+    
+</script>

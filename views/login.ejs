@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/login.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div id="login-body">
+            <div id="logo">
+                <img src="assets/ategirl.svg" alt="">
+            </div>
+            <div id="login-container">
+                <div id="login-container-body">
+                    <div id="login-container-logo">
+                        <img src="assets/LMCLogo.svg" alt="">
+                        <p>Welcome to LMC Admin App</p>
+                    </div>
+                    <a href="" id="google-btn">
+                        <img src="assets/google.svg" alt="">
+                        <p>Sign in with Google</p>
+                    </a>
+                    <div id="separator">
+                        <p id="text"><span>or Sign in with Email</span></p>
+                    </div>
+                    <div id="login-container-form">
+                        <form action="/users/login" method="POST">
+                            <label for="email">Email</label>
+                            <input type="text" name="email" id="email" placeholder="trainee@meditab.com">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" placeholder="*********" >
+                            <a href="">Forgot Password?</a>
+                            <input type="submit" value="Login">
+                        </form>
+                    </div>
+                    <div id="error">
+                    <% if(error != ''){ %>
+                        <p><%= error %></p>
+                    <% } %>
+                    <% if(success_msg != ''){ %>
+                        <p class="success-msg"><%= success_msg %></p>
+                    <%}%> 
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
