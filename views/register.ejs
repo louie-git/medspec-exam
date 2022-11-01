@@ -4,17 +4,35 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/register-def.css">
+
     <title>Document</title>
 </head>
 <body>
-    <form action="/users/register" method="POST">
-        <input type="text" name="name" placeholder="Name" >
-        <input type="text" name="email" placeholder="Email">
-        <input type="text" name="status" value="active" hidden>
-        <input type="text" name="role" value="Admin" hidden>
-        <input type="password" name="password" placeholder="Password">
-        <input type="password" name="password2" placeholder="Confirm Password">
-        <input type="submit" value="Submit">
-    </form>
+  
+    <div class="container">
+        <div class="container-body">
+            <div class="form">
+                <h1>Register Default User</h1>
+                <% if(error_msg != ''){ %>
+                    <p class="error_msg"><%= error_msg %></p>
+                <% } %> 
+                <% if(success_msg != ''){ %>
+                    <p class="success-msg"><%= success_msg %></p>
+                <%}%> 
+                <form action="/users/register-default" method="POST">
+                    <input type="text" name="name" placeholder="Name" >
+                    <input type="text" name="email" placeholder="Email">
+                    <input type="text" name="status" value="active" hidden>
+                    <input type="text" name="role" value="Admin" hidden>
+                    <input type="password" name="password" placeholder="Password">
+                    <input type="password" name="password2" placeholder="Confirm Password">
+                    <input type="submit" value="Submit">
+                </form>
+                <a id="login" href="/">Login</a>
+            </div>
+        </div>
+    </div>
+  
 </body>
 </html>

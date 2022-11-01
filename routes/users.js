@@ -14,6 +14,7 @@ router.get('/register',(req,res)=>{
         errors,
     })
 });
+
 //index
 router.get('/',ensureAuthenticated,(req,res)=>{
     User.find()
@@ -29,6 +30,66 @@ router.get('/',ensureAuthenticated,(req,res)=>{
         console.log(err)
     })
 });
+
+//regiter default User.
+router.post('/register-default', (req,res)=>{
+    const {name , email , password, password2, status , role} = req.body
+    let errors = [];
+   console.log(req.body)
+    if(!name || !email || !password || !password2){
+        req.flash('error_msg','Please fill all fields')
+        res.redirect('/default')
+    }
+    if(password !== password2){
+        req.flash('error_msg','Password not match!')
+        res.redirect('/default')
+    }
+    if(password.length<5){
+        req.flash('error_msg','Password must contain at least 6 characters!')
+        res.redirect('/default')
+    }
+    if(!emailValidator.validate(email)){
+        req.flash('error_msg','Email invalid!')
+        res.redirect('/default')
+    }
+    else{
+        User.findOne({email:email})
+        .then(user => {
+            if(user){
+                req.flash('error_msg','Email Exist!')
+                res.render('register')
+            }
+            else{
+                const newUser = new User({
+                    name,
+                    email,
+                    password,
+                    status,
+                    role
+                });
+                bcrypt.genSalt(10,(err,salt)=>{
+                    bcrypt.hash(newUser.password,salt,(err,hash)=>{
+                        if(err) throw err;
+                        newUser.password = hash;
+                        newUser.save()
+                        .then(() =>{
+                            req.flash('success_msg','Account Successfully Registered!')
+                            res.redirect('/default')
+
+
+                        })
+                        .catch(err => {
+                            req.flash('error_msg',`System error`)
+                            res.redirect('/default')
+                        })
+                    })
+                }) 
+            }    
+        });
+    }
+});
+
+
 
 //Register User
 router.post('/register',ensureAuthenticated, (req,res)=>{
@@ -55,12 +116,8 @@ router.post('/register',ensureAuthenticated, (req,res)=>{
         User.findOne({email:email})
         .then(user => {
             if(user){
-                errors.push({message:'Email Exist'})
-                res.render('register',{
-                    errors,
-                    name,
-                    email,
-                })
+                req.flash('error_msg',` Email already Exist`)
+                res.redirect('/users')
             }
             else{
                 const newUser = new User({
