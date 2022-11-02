@@ -9,4 +9,6 @@ Next, type 'npm run dev' and a message will appear that the system is running an
 
 Open your browser and type 'localhost:5000/default', A basic forms will appear and fill all forms. This is to add a user in the system.
 
+Enter in your browser 'localhost:5000/' to login.
+
 After your registration, a notification will appear that indicates your registration process. 
